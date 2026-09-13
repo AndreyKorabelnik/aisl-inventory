@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repository-inventory"
+version = "0.1.0a38"
+description = "Framework-agnostic deterministic source repository inventory"
+requires-python = ">=3.11"
+dependencies = [
+  "source-syntax-primitives==0.1.0a7",
+  "PyYAML>=6.0,<7",
+]
+readme = "README.md"
+license = {text = "Proprietary"}
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+repository-inventory = "repository_inventory.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["repository_inventory*"]
+
+[tool.setuptools.package-data]
+repository_inventory = ["resources/*.json"]

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "repository-inventory/v7",
+  "title": "Repository Inventory v7",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "run_provenance",
+    "identity",
+    "source_snapshot",
+    "files",
+    "structural_families",
+    "structural_members",
+    "family_file_evidence",
+    "file_observations",
+    "observation_diagnostics",
+    "probe_status",
+    "source_content_store",
+    "semantic_policy",
+    "inventory_id",
+    "semantic_fingerprint"
+  ],
+  "properties": {
+    "format": {"const": "repository-inventory/v7"},
+    "run_provenance": {"type": "object"},
+    "identity": {"type": "object"},
+    "source_snapshot": {"type": "object"},
+    "files": {"type": "array"},
+    "structural_families": {"type": "array"},
+    "structural_members": {"type": "array"},
+    "family_file_evidence": {"type": "array"},
+    "file_observations": {"type": "array"},
+    "observation_diagnostics": {"type": "array"},
+    "probe_status": {"type": "array"},
+    "source_content_store": {"type": "object"},
+    "semantic_policy": {"type": "object"},
+    "inventory_id": {"type": "string", "minLength": 1},
+    "semantic_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

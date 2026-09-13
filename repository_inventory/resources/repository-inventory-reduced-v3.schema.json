@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "repository-inventory-reduced/v3",
+  "title": "Repository Inventory Reduced v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format", "source_inventory", "reducer", "counts", "exact_representations",
+    "structural_similarity_groups", "observed_identities", "diagnostics", "probe_status", "claim_boundary",
+    "reduced_inventory_id", "semantic_fingerprint"
+  ],
+  "properties": {
+    "format": {"const": "repository-inventory-reduced/v3"},
+    "source_inventory": {"type": "object"},
+    "reducer": {"type": "object"},
+    "counts": {"type": "object"},
+    "exact_representations": {"type": "array"},
+    "structural_similarity_groups": {"type": "array"},
+    "observed_identities": {"type": "array"},
+    "diagnostics": {"type": "array"},
+    "probe_status": {"type": "array"},
+    "claim_boundary": {"type": "string"},
+    "reduced_inventory_id": {"type": "string", "minLength": 1},
+    "semantic_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
