@@ -1,0 +1,39 @@
+name: Bootstrap uploaded canonical source
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/bootstrap-uploaded-source.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify and publish exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP='    aisl-inventory source-canonical.zip'
+          EXPECTED_ZIP_SHA='4df7a3a5dcac11aad99fb3b064a7d67bd2b4fc531050979a3b030e9393400bab'
+          EXPECTED_TREE='08a9c028ec69c5c106435588ea04a9cc3c4dfbb0'
+          test "$(sha256sum "$ZIP" | awk '{print $1}')" = "$EXPECTED_ZIP_SHA"
+          rm -rf /tmp/source && mkdir -p /tmp/source
+          unzip -q "$ZIP" -d /tmp/source
+          ROOT='/tmp/source/repository-inventory-0.1.0a38'
+          test -d "$ROOT"
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a "$ROOT"/. .
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          TREE="$(git write-tree)"
+          test "$TREE" = "$EXPECTED_TREE"
+          git commit -m 'Import Repository Inventory canonical source'
+          test "$(git rev-parse HEAD^{tree})" = "$EXPECTED_TREE"
+          git push origin HEAD:main
